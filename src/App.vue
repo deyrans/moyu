@@ -1,10 +1,9 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
+import container from "./components/container.vue";
 </script>
 
 <template>
-  <HelloWorld />
-  <!-- <MyBtn /> -->
+  <container />
 </template>
 
 <style>
