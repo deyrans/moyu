@@ -13,7 +13,7 @@ import { ref } from "vue";
 // https://dayu.qqsuu.cn/xingzuoyunshi/apis.php?type=json
 // https://dayu.qqsuu.cn/moyuribaoshipin/apis.php?type=json
 const img_url = ref();
-const srcList = ref();
+const srcList = ref([0]);
 
 const api = axios.create({
   baseURL: "https://api.j4u.ink/v1/store/other",
@@ -23,8 +23,10 @@ const api = axios.create({
 //使用axios实例来发送请求
 api.get("/proxy/remote/moyu.json").then((res) => {
   img_url.value = res.data.data.img_url;
-  srcList.value = res.data.data.img_url;
+  srcList.value.push(res.data.data.img_url);
 });
+
+console.log(srcList+"ajaj");
 
 
 </script>
