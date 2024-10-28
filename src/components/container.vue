@@ -1,6 +1,7 @@
 <script setup>
 import useDark from "./useDark.vue";
 import moyuimage from "./moyuimage.vue";
+import timeRubric from "./time-rubric.vue";
 </script>
 
 <template>
@@ -14,7 +15,9 @@ import moyuimage from "./moyuimage.vue";
         <moyuimage />
       </el-main>
 
-      <el-footer> </el-footer>
+      <el-footer> 
+        <timeRubric />
+      </el-footer>
     </el-container>
   </div>
 </template>

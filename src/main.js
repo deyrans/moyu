@@ -8,14 +8,17 @@ import App from './App.vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
+// 全国化
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'dayjs/locale/zh-cn'
+
+// axios
+import axios from 'axios'
+import vueAxios from 'vue-axios'
 
 //创建vue实例
 const app=createApp(App);
 
-app.use({
-  locale: zhCn,
-})
+app.use({locale: zhCn,}).use(vueAxios,axios)
 
 app.mount('#app');
