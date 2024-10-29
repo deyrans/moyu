@@ -20,26 +20,36 @@ import CardModules from "./card.vue";
 
     <!-- 中间部分 -->
     <el-row :gutter="10">
+      <!-- 中间左边卡片 -->
       <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
         <div class="grid-content">
-          <div class="card column">
+          <div class="card">
+            <CardModules />
+          </div>
+          <div class="card">
+            <CardModules />
+          </div>
+          <div class="card">
             <CardModules />
           </div>
         </div>
       </el-col>
+
+      <!-- 中间右边卡片 -->
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+        <!-- 摸鱼日历卡片单排居中 -->
         <div class="card">
           <moyuimage />
         </div>
+        <!-- 多排居中 -->
+        <div class="grid-content"></div>
       </el-col>
     </el-row>
 
     <!-- 底部 -->
     <el-row>
       <el-col :span="24">
-        <div class="footer">
-          
-        </div>
+        <div class="footer"></div>
       </el-col>
     </el-row>
   </div>
@@ -51,28 +61,34 @@ import CardModules from "./card.vue";
   margin: 0;
 }
 
-.column {
-  float: left;
+.el-col {
+  padding: 5px;
 }
 
-.header-dark{
+.header-dark {
   float: right;
   margin-right: 1pc;
 }
 
 /* 文章卡片效果 */
 .card {
+  /* 居中 */
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
   border-radius: 5px;
-  padding: 10px;
-  margin: auto;
+  padding: 5px;
 }
 
-/* 响应式布局 - 屏幕尺寸小于 700px 时，两列布局改为上下布局 */
-/* @media screen and (max-width: 700px) {
-  .el-col {
-    width: 100%;
-  }
-} */
+.grid-content {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
 
 /* 底部 */
 .footer {

@@ -1,17 +1,26 @@
 <template>
-  <div id="card"></div>
+  <div class="card">
+    
+  </div>
 </template>
 
 <script setup>
 </script>
 
 <style scoped>
-#card {
-  margin: 2px;
-  margin: auto;
-  background-color: brown;
-  border-radius: 10px;
-  min-height: 20pc;
-  min-width: 15pc;
+.card {
+  border-radius: 5px;
+}
+
+@media screen and (min-width: 1100px) {
+  .card {
+    width: 15pc;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .card {
+    width: 100%;
+  }
 }
 </style>

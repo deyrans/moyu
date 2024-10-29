@@ -47,8 +47,14 @@ api.get("/proxy/remote/moyu.json").then((res) => {
   border-radius: 5px;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 1100px) {
   .image__preview {
+    width: 15pc;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .el-image {
     width: 100%;
   }
 }
