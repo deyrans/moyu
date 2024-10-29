@@ -3,7 +3,7 @@
     <!-- <p>当前时间：{{ currentTime  }}</p> -->
     <p>{{ greeting }}</p>
     <p>{{ tip }}</p>
-    <button @click="updateTime">更新</button>
+    <!-- <button @click="updateTime">更新</button> -->
   </div>
 </template>
 
@@ -37,3 +37,10 @@ function updateTime() {
 }
 
 </script>
+
+<style scoped>
+.dark {
+  background: #252525;
+  color: white;
+}
+</style>

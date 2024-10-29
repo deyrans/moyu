@@ -13,7 +13,7 @@ import { ref } from "vue";
 // https://dayu.qqsuu.cn/xingzuoyunshi/apis.php?type=json
 // https://dayu.qqsuu.cn/moyuribaoshipin/apis.php?type=json
 const img_url = ref();
-const srcList = ref([0]);
+const srcList = ref([""]);
 
 const api = axios.create({
   baseURL: "https://api.j4u.ink/v1/store/other",
@@ -26,15 +26,11 @@ api.get("/proxy/remote/moyu.json").then((res) => {
   srcList.value.push(res.data.data.img_url);
 });
 
-console.log(srcList+"ajaj");
-
-
 </script>
 
 <template>
-  <div class="demo-image__preview">
+  <div class="image__preview">
     <el-image
-      style="width: 15%; height: 10%"
       :src="img_url"
       :zoom-rate="1.2"
       :max-scale="7"
@@ -47,14 +43,13 @@ console.log(srcList+"ajaj");
 </template>
 
 <style scoped>
-.demo-image__error .image-slot {
-  font-size: 30px;
+.el-image{
+  border-radius: 5px;
 }
-.demo-image__error .image-slot .el-icon {
-  font-size: 30px;
-}
-.demo-image__error .el-image {
-  width: 100%;
-  height: 200px;
+
+@media screen and (min-width: 600px) {
+  .image__preview {
+    width: 100%;
+  }
 }
 </style>
