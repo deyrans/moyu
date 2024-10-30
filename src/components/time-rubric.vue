@@ -22,12 +22,6 @@ const api = axios.create({
 });
 
 //使用axios实例来发送请求
-api.get("/getGreetingMessage?type=json").then((res) => {
-  currentTime.value = res.data.data.currentTime;
-  greeting.value = res.data.data.greeting;
-  tip.value = res.data.data.tip;
-});
-
 function updateTime() {
   api.get("/getGreetingMessage?type=json").then((res) => {
     currentTime.value = res.data.data.currentTime;
@@ -35,6 +29,8 @@ function updateTime() {
     tip.value = res.data.data.tip;
   });
 }
+
+updateTime()
 
 </script>
 

@@ -2,7 +2,9 @@
 import useDark from "./useDark.vue";
 import moyuimage from "./moyuimage.vue";
 import timeRubric from "./time-rubric.vue";
-import CardModules from "./card.vue";
+import moyuvideo from "./moyuvideo.vue";
+import cardVideo from "./card-video.vue";
+
 </script>
 
 <template>
@@ -24,23 +26,20 @@ import CardModules from "./card.vue";
       <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
         <div class="grid-content">
           <div class="card">
-            <CardModules />
-          </div>
-          <div class="card">
-            <CardModules />
-          </div>
-          <div class="card">
-            <CardModules />
+            <cardVideo/>
           </div>
         </div>
       </el-col>
 
       <!-- 中间右边卡片 -->
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
-        <!-- 摸鱼日历卡片单排居中 -->
+        <!-- 单排居中 -->
         <div class="card">
           <moyuimage />
         </div>
+        <!-- <div class="card">
+          <moyuvideo />
+        </div> -->
         <!-- 多排居中 -->
         <div class="grid-content"></div>
       </el-col>
