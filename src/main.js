@@ -7,6 +7,7 @@ import App from './App.vue'
 //全局导入element-plus 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 // 全国化
 import zhCn from 'element-plus/es/locale/lang/zh-cn'

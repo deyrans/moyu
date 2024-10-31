@@ -4,7 +4,6 @@ import moyuimage from "./moyuimage.vue";
 import timeRubric from "./time-rubric.vue";
 import moyuvideo from "./moyuvideo.vue";
 import cardVideo from "./card-video.vue";
-
 </script>
 
 <template>
@@ -26,7 +25,7 @@ import cardVideo from "./card-video.vue";
       <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
         <div class="grid-content">
           <div class="card">
-            <cardVideo/>
+            <cardVideo />
           </div>
         </div>
       </el-col>
