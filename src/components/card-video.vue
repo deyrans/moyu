@@ -1,15 +1,22 @@
 <template>
   <div class="card_preview">
     <div class="card">
-      <video :src="video_url" class="video" ref="video" />
+      <el-icon><CloseBold /></el-icon>
+      <video
+        :src="video_url"
+        class="video"
+        ref="video"
+        :image="Loading"
+        @click="playVideo"
+        @dblclick="updateVideo"
+        @timeupdate="onTimeupdate"
+        @loadedmetadata="loadEdmetadata"
+      />
     </div>
-    <el-button :icon="Refresh" circle @click="updateVideo" />
-    <el-button
-      v-if="is_show == 0"
-      :icon="VideoPlay"
-      circle
-      @click="playVideo"
-    />
+    <!-- 更新按键 -->
+    <!-- <el-button :icon="Refresh" circle @click="updateVideo" /> -->
+    <el-button :icon="Switch" circle @click="intercutVideo" />
+    <el-button v-if="is_show" :icon="VideoPlay" circle @click="playVideo" />
     <el-button v-else :icon="VideoPause" circle @click="playVideo" />
   </div>
 </template>
@@ -17,40 +24,96 @@
 <script lang='ts' setup>
 import axios from "axios";
 import { ref, watch } from "vue";
-import { Refresh, VideoPlay, VideoPause } from "@element-plus/icons-vue";
+import {
+  Refresh,
+  VideoPlay,
+  VideoPause,
+  Switch,
+  Loading,
+} from "@element-plus/icons-vue";
 
 const video_url = ref();
 const video = ref<HTMLVideoElement | null>(null);
-const is_show = ref(0);
-const currentTime = ref();
-const duration = ref();
+// is_show true 显示暂停，false 显示播放
+const is_show = ref(false);
+// 当前时间
+const currentTime = ref(0);
+// 总时间
+const duration = ref(0);
+let flag = true;
 
 const api = axios.create({
-  baseURL: "https://api.kuleu.com",
-  timeout: 5000,
+  baseURL: "https://api.kuleu.com/api",
 });
 
-function updateVideo() {
-  api.get("/api/MP4_xiaojiejie?type=json").then((MP4_xiaojiejie) => {
-    if (MP4_xiaojiejie.status == 200) {
-      video_url.value = MP4_xiaojiejie.data.mp4_video;
-    }
-  });
+function MP4_xiaojiejie() {
+  api
+    .get("/MP4_xiaojiejie?type=json")
+    .then((MP4_xiaojiejie) => {
+      if (MP4_xiaojiejie.status == 200) {
+        video_url.value = MP4_xiaojiejie.data.mp4_video;
+        is_show.value = true;
+      }
+    })
+    .catch((error) => {
+      console.log("MP4_xiaojiejie");
+    });
 }
 
-updateVideo();
+function xjj() {
+  api
+    .get("/xjj?type=json")
+    .then((xjj) => {
+      if (xjj.status == 200) {
+        video_url.value = xjj.data.video;
+        is_show.value = true;
+      }
+    })
+    .catch((error) => {
+      console.log("xjj");
+    });
+}
 
+MP4_xiaojiejie();
+
+function intercutVideo() {
+  if (flag) {
+    MP4_xiaojiejie();
+    flag = false;
+  } else {
+    xjj();
+    flag = true;
+  }
+}
+
+function updateVideo() {
+  if (flag) {
+    xjj();
+  } else {
+    MP4_xiaojiejie();
+  }
+}
+
+// 通过ev.target.currentTime获取当前时间
+const onTimeupdate = (ev: any) => {
+  currentTime.value = ev.target.currentTime;
+  if (video.value?.ended) is_show.value = true;
+};
+
+// 通过ev.target.duration获取总时长
+const loadEdmetadata = (ev: any) => {
+  duration.value = ev.target.duration;
+};
+
+// 点击播放或暂停 
 const playVideo = (): void => {
+  // paused:暂停 played：播放
   if (video.value?.paused) {
     video.value.play();
-    is_show.value = 1;
-
-    console.log(video.value.currentTime);
-    console.log(video.value.duration);
-    
+    is_show.value = false;
   } else if (video.value?.played) {
     video.value.pause();
-    is_show.value = 0;
+    is_show.value = true;
   }
 };
 </script>

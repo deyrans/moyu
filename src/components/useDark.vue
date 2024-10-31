@@ -1,20 +1,20 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useDark, useToggle } from "@vueuse/core";
+import { Sunny, Moon } from "@element-plus/icons-vue";
 
+const is_dark = ref(false);
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-const value1 = ref(true);
-
 </script>
 
 <template>
-  <el-switch v-model="value1" @change="toggleDark">
+  <el-switch v-model="is_dark" @change="toggleDark">
     <template #active-action>
-      <span class="custom-active-action">D</span>
+      <el-icon><Moon /></el-icon>
     </template>
     <template #inactive-action>
-      <span class="custom-inactive-action">L</span>
+      <el-icon><Sunny /></el-icon>
     </template>
   </el-switch>
 </template>
@@ -24,4 +24,4 @@ const value1 = ref(true);
   background: #252525;
   color: white;
 }
-</style>
+</style> 
