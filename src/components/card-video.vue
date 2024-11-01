@@ -156,6 +156,7 @@ function SwitchVideo() {
     }
   } else {
     cardHeardFlag.value = cardHeard.value;
+    is_show.value = true;
     cardLoading.value = true;
     cardHeard.value = "video";
   }
