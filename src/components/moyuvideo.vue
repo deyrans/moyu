@@ -1,7 +1,7 @@
 <template>
-  <div class="video_preview">
+  <div class="video_preview" @click="playVideo" @dblclick="SwitchVideo">
     <el-skeleton el-skeleton :rows="5" animated :loading="cardLoading">
-      <video :src="video_url" ref="video" @click="playVideo" class="video" />
+      <video :src="video_url" ref="video" class="video" />
     </el-skeleton>
   </div>
 </template>
@@ -27,7 +27,6 @@ axios.all([get_moyuribaoshipin()]).then(
   axios.spread(function (moyuribaoshipin) {
     if (moyuribaoshipin.status == 200) {
       video_url.value = moyuribaoshipin.data.data;
-      cardLoading.value = false;
     }
   })
 );
@@ -39,6 +38,14 @@ const playVideo = (): void => {
     video.value.play();
   } else if (video.value?.played) {
     video.value.pause();
+  }
+};
+
+const SwitchVideo = () => {
+  if (cardLoading.value) {
+    cardLoading.value = false;
+  } else {
+    cardLoading.value = true;
   }
 };
 </script>
