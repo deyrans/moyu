@@ -22,6 +22,7 @@
       <br />
       <!-- 更新按键 -->
       <!-- <el-button :icon="Refresh" circle @click="updateVideo" /> -->
+      <el-button :icon="SwitchButton" circle @click="SwitchVideo" />
       <el-button :icon="Switch" circle @click="intercutVideo" />
       <el-button v-if="is_show" :icon="VideoPlay" circle @click="playVideo" />
       <el-button v-else :icon="VideoPause" circle @click="playVideo" />
@@ -40,20 +41,23 @@ import {
   Switch,
   Loading,
   CircleClose,
+  SwitchButton,
 } from "@element-plus/icons-vue";
 
 const video_url = ref();
 const video = ref<HTMLVideoElement | null>(null);
 // is_show true 显示暂停，false 显示播放
-const is_show = ref(false);
+const is_show = ref(true);
 const is_closeCard = ref(true);
 const cardHeard = ref("video");
+const cardHeardFlag = ref("");
 const cardLoading = ref(true);
 // 当前时间
 const currentTime = ref(0);
 // 总时间
 const duration = ref(0);
 let flag = true;
+const num = ref(0);
 
 const api = axios.create({
   baseURL: "https://api.kuleu.com/api",
@@ -67,11 +71,11 @@ function MP4_xiaojiejie() {
         video_url.value = MP4_xiaojiejie.data.mp4_video;
         is_show.value = true;
         cardHeard.value = "高质量小姐姐";
-        cardLoading.value = false;
+        console.log("MP4_xiaojiejie");
       }
     })
     .catch((error) => {
-      console.log("MP4_xiaojiejie");
+      console.log(error);
     });
 }
 
@@ -83,7 +87,6 @@ function xjj() {
         video_url.value = xjj.data.video;
         is_show.value = true;
         cardHeard.value = "随机小姐姐";
-        cardLoading.value = false;
       }
     })
     .catch((error) => {
@@ -91,21 +94,21 @@ function xjj() {
     });
 }
 
-MP4_xiaojiejie();
+// MP4_xiaojiejie();
 
 function intercutVideo() {
-  cardLoading.value = true;
-  if (flag) {
-    xjj();
-    flag = false;
-  } else {
-    MP4_xiaojiejie();
-    flag = true;
+  if (!cardLoading.value) {
+    if (flag) {
+      xjj();
+      flag = false;
+    } else {
+      MP4_xiaojiejie();
+      flag = true;
+    }
   }
 }
 
 function updateVideo() {
-  cardLoading.value = true;
   if (flag) {
     xjj();
   } else {
@@ -140,6 +143,23 @@ const closeVideo = () => {
   if (is_closeCard.value) is_closeCard.value = false;
   else is_closeCard.value = true;
 };
+
+function SwitchVideo() {
+  if (cardLoading.value) {
+    cardLoading.value = false;
+    if (num.value == 0) {
+      MP4_xiaojiejie();
+      num.value = 1;
+    } else {
+      cardHeard.value = cardHeardFlag.value;
+      cardHeardFlag.value = "";
+    }
+  } else {
+    cardHeardFlag.value = cardHeard.value;
+    cardLoading.value = true;
+    cardHeard.value = "video";
+  }
+}
 </script>
 
 <style scoped>
