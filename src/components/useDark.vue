@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useDark, useToggle } from "@vueuse/core";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 
-const is_switchDark = ref(false);
 // useDark 来检测当前是否为深色模式，并通过 useToggle 来切换深色与浅色模式
-const isDark = useDark({
-  storageKey: "vitepress-theme-appearance",
-  // 暗黑class名字
-  valueDark: "dark",
-  // 高亮class名字
-  valueLight: "light",
-});
+const isDark = useDark();
 
-console.log(localStorage.getItem("vitepress-theme-appearance"));
+// switch的v-model的值
+const is_switchDark = ref(isDark.value);
 
 const toggleDark = useToggle(isDark);
+
+// 监听收到更改系统主题色，重新设置switch的v-model的值
+watch(isDark, (newValue, oldValue) => {
+  is_switchDark.value = newValue;
+});
 </script>
 
 <template>
@@ -28,10 +27,3 @@ const toggleDark = useToggle(isDark);
     </template>
   </el-switch>
 </template>
-
-<style>
-.dark {
-  background: #252525;
-  color: white;
-}
-</style> 

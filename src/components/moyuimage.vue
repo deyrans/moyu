@@ -1,14 +1,24 @@
 <template>
   <div class="image_preview">
-    <el-image
-      :src="img_url"
-      :zoom-rate="1.2"
-      :max-scale="7"
-      :min-scale="0.2"
-      :preview-src-list="srcList"
-      :initial-index="1"
-      fit="cover"
-    />
+    <el-skeleton style="width: 240px" :loading="loading" animated>
+      <template #template>
+        <el-skeleton-item variant="image" style="width: 240px; height: 240px" />
+        <el-skeleton-item :rows="5" animated style="width: 50%" />
+        <el-skeleton-item :rows="5" animated style="width: 100%" />
+        <el-skeleton-item :rows="5" animated style="width: 30%" />
+      </template>
+      <template #default>
+        <el-image
+          :src="img_url"
+          :zoom-rate="1.2"
+          :max-scale="7"
+          :min-scale="0.2"
+          :preview-src-list="srcList"
+          :initial-index="1"
+          fit="cover"
+        />
+      </template>
+    </el-skeleton>
   </div>
 </template>
 
@@ -27,10 +37,10 @@ import { ref } from "vue";
 // https://dayu.qqsuu.cn/moyuribaoshipin/apis.php?type=json
 const img_url = ref();
 const srcList = ref();
+const loading = ref(true);
 
 const api = axios.create({
   baseURL: "https://dayu.qqsuu.cn",
-  timeout: 5000,
 });
 
 function get_j4u() {
@@ -96,10 +106,9 @@ axios
 
       if (vvhan.status == 200) {
         img_url.value = vvhan.data.url;
-        
+
         srcList.value.push(vvhan.data.url);
 
-        
         srcList.value.push(moyuribao.data.data);
         srcList.value.push(moyurili.data.data);
         srcList.value.push(mingxingbagua.data.data);
@@ -156,6 +165,7 @@ axios
 
         srcList.value.push(xingzuoyunshi.data.data);
       }
+      loading.value = false;
     })
   );
 </script>

@@ -1,6 +1,8 @@
 <template>
   <div class="video_preview">
-    <video :src="video_url" controls class="video" />
+    <el-skeleton el-skeleton :rows="5" animated :loading="cardLoading">
+      <video :src="video_url" ref="video" @click="playVideo" class="video" />
+    </el-skeleton>
   </div>
 </template>
 
@@ -8,25 +10,37 @@
 import axios from "axios";
 import { ref } from "vue";
 
+const cardLoading = ref(true);
 // https://dayu.qqsuu.cn/moyuribaoshipin/apis.php?type=json
 const video_url = ref();
+const video = ref<HTMLVideoElement | null>(null);
 
 const api = axios.create({
-  baseURL: "https://dayu.qqsuu.cn",
-  timeout: 5000,
+  baseURL: "https://dayu.qqsuu.cn/moyuribaoshipin",
 });
 
 function get_moyuribaoshipin() {
-  return api.get("/moyuribaoshipin/apis.php?type=json");
+  return api.get("/apis.php?type=json");
 }
 
 axios.all([get_moyuribaoshipin()]).then(
   axios.spread(function (moyuribaoshipin) {
     if (moyuribaoshipin.status == 200) {
       video_url.value = moyuribaoshipin.data.data;
+      cardLoading.value = false;
     }
   })
 );
+
+// 点击播放或暂停
+const playVideo = (): void => {
+  // paused:暂停 played：播放
+  if (video.value?.paused) {
+    video.value.play();
+  } else if (video.value?.played) {
+    video.value.pause();
+  }
+};
 </script>
 
 

@@ -4,6 +4,7 @@ import moyuimage from "./moyuimage.vue";
 import timeRubric from "./time-rubric.vue";
 import moyuvideo from "./moyuvideo.vue";
 import cardVideo from "./card-video.vue";
+import cardLeftTag from "./card-leftTag.vue";
 </script>
 
 <template>
@@ -13,9 +14,14 @@ import cardVideo from "./card-video.vue";
     <el-row>
       <el-col :span="24">
         <div class="header">
-          <useDark class="header-dark" />
-          <timeRubric />
+          <el-space class="header-timeRubric">
+            <timeRubric />
+          </el-space>
+          <el-space class="header-dark">
+            <useDark />
+          </el-space>
         </div>
+        <el-divider />
       </el-col>
     </el-row>
 
@@ -36,11 +42,15 @@ import cardVideo from "./card-video.vue";
         <div class="card">
           <moyuimage />
         </div>
-        <!-- <div class="card">
+        <div class="card">
           <moyuvideo />
-        </div> -->
+        </div>
         <!-- 多排居中 -->
-        <div class="grid-content"></div>
+        <div class="grid-content">
+          <div class="card">
+            <cardLeftTag />
+          </div>
+        </div>
       </el-col>
     </el-row>
 
@@ -56,16 +66,16 @@ import cardVideo from "./card-video.vue";
 <style scoped>
 /* 头部标题 */
 .header {
-  margin: 0;
+  display: -webkit-flex;
+  display: flex;
 }
 
 .el-col {
   padding: 5px;
 }
 
-.header-dark {
-  float: right;
-  margin-right: 1pc;
+.header-timeRubric {
+  margin: auto;
 }
 
 /* 文章卡片效果 */
