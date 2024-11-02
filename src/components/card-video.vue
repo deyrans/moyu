@@ -110,7 +110,7 @@ function xjj() {
 
 // MP4_xiaojiejie();
 
-function intercutVideo() {
+const intercutVideo = () => {
   if (!cardLoading.value) {
     if (flag) {
       MP4_xiaojiejie();
@@ -120,15 +120,15 @@ function intercutVideo() {
       flag = true;
     }
   }
-}
+};
 
-function updateVideo() {
+const updateVideo = () => {
   if (flag) {
     xjj();
   } else {
     MP4_xiaojiejie();
   }
-}
+};
 
 // 通过ev.target.currentTime获取当前时间
 const onTimeupdate = (ev: any) => {
@@ -158,7 +158,7 @@ const closeVideo = () => {
   else is_closeCard.value = true;
 };
 
-function SwitchVideo() {
+const SwitchVideo = () => {
   if (cardLoading.value) {
     cardLoading.value = false;
     if (num.value == 0) {
@@ -174,7 +174,7 @@ function SwitchVideo() {
     cardLoading.value = true;
     cardHeard.value = "video";
   }
-}
+};
 </script>
 
 <style scoped>

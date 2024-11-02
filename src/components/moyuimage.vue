@@ -3,9 +3,9 @@
     <el-skeleton style="width: 240px" :loading="loading" animated>
       <template #template>
         <el-skeleton-item variant="image" style="width: 240px; height: 240px" />
-        <el-skeleton-item :rows="5" animated style="width: 50%" />
-        <el-skeleton-item :rows="5" animated style="width: 100%" />
-        <el-skeleton-item :rows="5" animated style="width: 30%" />
+        <el-skeleton-item animated style="width: 50%" />
+        <el-skeleton-item animated style="width: 100%" />
+        <el-skeleton-item animated style="width: 30%" />
       </template>
       <template #default>
         <el-image

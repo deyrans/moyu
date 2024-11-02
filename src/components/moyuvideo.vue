@@ -1,7 +1,35 @@
 <template>
-  <div class="video_preview" @click="playVideo" @dblclick="SwitchVideo">
-    <el-skeleton el-skeleton :rows="5" animated :loading="cardLoading">
-      <video :src="video_url" ref="video" class="video" />
+  <div class="video_preview">
+    <el-skeleton
+      style="width: 240px"
+      el-skeleton
+      :rows="5"
+      animated
+      :loading="cardLoading"
+      @dblclick="SwitchVideo"
+    >
+      <template #template>
+        <el-skeleton-item variant="image" style="width: 240px; height: 240px" />
+        <el-skeleton-item animated style="width: 50%" />
+        <el-skeleton-item animated style="width: 50%" />
+        <el-skeleton-item animated style="width: 40%" />
+        <el-button
+          :icon="SwitchButton"
+          
+          circle
+          @click="SwitchVideo"
+        />
+        <el-skeleton-item animated style="width: 40%" />
+      </template>
+      <template #default>
+        <video
+          :src="video_url"
+          ref="video"
+          class="video"
+          @click="playVideo"
+          @dblclick="SwitchVideo"
+        />
+      </template>
     </el-skeleton>
   </div>
 </template>
@@ -9,8 +37,10 @@
 <script lang="ts" setup>
 import axios from "axios";
 import { ref } from "vue";
+import { SwitchButton } from "@element-plus/icons-vue";
 
 const cardLoading = ref(true);
+const Switch_Button = ref(true);
 // https://dayu.qqsuu.cn/moyuribaoshipin/apis.php?type=json
 const video_url = ref();
 const video = ref<HTMLVideoElement | null>(null);
