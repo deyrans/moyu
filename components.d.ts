@@ -13,7 +13,7 @@ declare module 'vue' {
     CardLife: typeof import('./src/components/card-life.vue')['default']
     CardVideo: typeof import('./src/components/card-video.vue')['default']
     Container: typeof import('./src/components/container.vue')['default']
-    copy: typeof import('./src/components/container copy.vue')['default']
+    copy: typeof import('./src/components/moyuimage copy.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']

@@ -14,7 +14,7 @@
           :max-scale="7"
           :min-scale="0.2"
           :preview-src-list="srcList"
-          :initial-index="1"
+          :initial-index="0"
           fit="cover"
         />
       </template>
@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 import axios from "axios";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 // https://api.j4u.ink/v1/store/other/proxy/remote/moyu.json
 // https://api.vvhan.com/api/moyu?type=json
@@ -34,8 +34,7 @@ import { ref } from "vue";
 // https://dayu.qqsuu.cn/neihanduanzi/apis.php?type=json
 // https://dayu.qqsuu.cn/weiyujianbao/apis.php?type=json
 // https://dayu.qqsuu.cn/xingzuoyunshi/apis.php?type=json
-// https://dayu.qqsuu.cn/moyuribaoshipin/apis.php?type=json
-const img_url = ref();
+const img_url = ref("");
 const srcList = ref();
 const loading = ref(true);
 
@@ -45,10 +44,6 @@ const api = axios.create({
 
 function get_j4u() {
   return axios.get("https://api.j4u.ink/v1/store/other/proxy/remote/moyu.json");
-}
-
-function get_vvhan() {
-  return axios.get("https://api.vvhan.com/api/moyu?type=json");
 }
 
 function get_moyuribao() {
@@ -75,14 +70,11 @@ function get_xingzuoyunshi() {
   return api.get("/xingzuoyunshi/apis.php?type=json");
 }
 
-function get_moyuribaoshipin() {
-  return api.get("/moyuribaoshipin/apis.php?type=json");
-}
+srcList.value = [];
 
 axios
   .all([
     get_j4u(),
-    get_vvhan(),
     get_moyuribao(),
     get_moyurili(),
     get_mingxingbagua(),
@@ -93,7 +85,6 @@ axios
   .then(
     axios.spread(function (
       j4u,
-      vvhan,
       moyuribao,
       moyurili,
       mingxingbagua,
@@ -101,73 +92,32 @@ axios
       weiyujianbao,
       xingzuoyunshi
     ) {
-      // 初始化
-      srcList.value = [];
-
-      if (vvhan.status == 200) {
-        img_url.value = vvhan.data.url;
-
-        srcList.value.push(vvhan.data.url);
-
-        srcList.value.push(moyuribao.data.data);
-        srcList.value.push(moyurili.data.data);
-        srcList.value.push(mingxingbagua.data.data);
-        srcList.value.push(neihanduanzi.data.data);
-        srcList.value.push(weiyujianbao.data.data);
-        srcList.value.push(xingzuoyunshi.data.data);
-      } else if (j4u.status == 200) {
-        img_url.value = j4u.data.data.img_url;
-
-        srcList.value.push(j4u.data.data.img_url);
-        srcList.value.push(moyuribao.data.data);
-        srcList.value.push(moyurili.data.data);
-        srcList.value.push(mingxingbagua.data.data);
-        srcList.value.push(neihanduanzi.data.data);
-        srcList.value.push(weiyujianbao.data.data);
-        srcList.value.push(xingzuoyunshi.data.data);
-      } else if (moyuribao.data.code == 200) {
-        img_url.value = moyuribao.data.data;
-
-        srcList.value.push(moyuribao.data.data);
-        srcList.value.push(moyurili.data.data);
-        srcList.value.push(mingxingbagua.data.data);
-        srcList.value.push(neihanduanzi.data.data);
-        srcList.value.push(weiyujianbao.data.data);
-        srcList.value.push(xingzuoyunshi.data.data);
-      } else if (moyurili.data.code == 200) {
-        img_url.value = moyurili.data.data;
-
-        srcList.value.push(moyurili.data.data);
-        srcList.value.push(mingxingbagua.data.data);
-        srcList.value.push(neihanduanzi.data.data);
-        srcList.value.push(weiyujianbao.data.data);
-        srcList.value.push(xingzuoyunshi.data.data);
-      } else if (mingxingbagua.data.code == 200) {
-        img_url.value = mingxingbagua.data.data;
-
-        srcList.value.push(mingxingbagua.data.data);
-        srcList.value.push(neihanduanzi.data.data);
-        srcList.value.push(weiyujianbao.data.data);
-        srcList.value.push(xingzuoyunshi.data.data);
-      } else if (neihanduanzi.data.code == 200) {
-        img_url.value = neihanduanzi.data.data;
-
-        srcList.value.push(neihanduanzi.data.data);
-        srcList.value.push(weiyujianbao.data.data);
-        srcList.value.push(xingzuoyunshi.data.data);
-      } else if (weiyujianbao.data.code == 200) {
-        img_url.value = weiyujianbao.data.data;
-
-        srcList.value.push(weiyujianbao.data.data);
-        srcList.value.push(xingzuoyunshi.data.data);
-      } else if (xingzuoyunshi.data.code == 200) {
-        img_url.value = xingzuoyunshi.data.data;
-
-        srcList.value.push(xingzuoyunshi.data.data);
-      }
       loading.value = false;
+      img_url.value = j4u.data.data.img_url;
+
+      srcList.value.push(j4u.data.data.img_url);
+      srcList.value.push(moyuribao.data.data);
+      srcList.value.push(moyurili.data.data);
+      srcList.value.push(mingxingbagua.data.data);
+      srcList.value.push(neihanduanzi.data.data);
+      srcList.value.push(weiyujianbao.data.data);
+      srcList.value.push(xingzuoyunshi.data.data);
+      console.log("get_j4u666:" + img_url.value);
     })
   );
+
+axios
+  .get("https://api.vvhan.com/api/moyu?type=json")
+  .then((vvhan) => {
+    if (img_url.value.toString() == "") {
+      loading.value = false;
+      srcList.value.push(vvhan.data.url);
+      img_url.value = vvhan.data.url;
+    } else srcList.value.push(vvhan.data.url);
+  })
+  .catch((err) => {
+    console.log("get_vvhan()");
+  });
 </script>
 
 
