@@ -26,7 +26,6 @@ function get_moyuribaoshipin() {
 axios.all([get_moyuribaoshipin()]).then(
   axios.spread(function (moyuribaoshipin) {
     video_url.value = moyuribaoshipin.data.data;
-    cardLoading.value = false;
   })
 );
 
