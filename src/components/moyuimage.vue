@@ -7,7 +7,7 @@
         <el-skeleton-item animated style="width: 100%" />
         <el-skeleton-item animated style="width: 30%" />
       </template>
-      <template #default>
+      <template>
         <el-image
           :src="img_url"
           :zoom-rate="1.2"

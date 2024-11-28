@@ -11,6 +11,7 @@ declare module 'vue' {
     CardLeft: typeof import('./src/components/card-left.vue')['default']
     CardLeftTag: typeof import('./src/components/card-leftTag.vue')['default']
     CardLife: typeof import('./src/components/card-life.vue')['default']
+    CardQinghua: typeof import('./src/components/card-qinghua.vue')['default']
     CardVideo: typeof import('./src/components/card-video.vue')['default']
     Container: typeof import('./src/components/container.vue')['default']
     copy: typeof import('./src/components/moyuimage copy.vue')['default']

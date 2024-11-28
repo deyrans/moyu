@@ -5,6 +5,7 @@ import timeRubric from "./time-rubric.vue";
 import moyuvideo from "./moyuvideo.vue";
 import cardVideo from "./card-video.vue";
 import cardLeftTag from "./card-leftTag.vue";
+import cardQinghua from "./card-qinghua.vue";
 </script>
 
 <template>
@@ -32,6 +33,9 @@ import cardLeftTag from "./card-leftTag.vue";
         <div class="grid-content">
           <div class="card">
             <cardVideo />
+          </div>
+          <div class="card">
+            <cardQinghua />
           </div>
         </div>
       </el-col>
