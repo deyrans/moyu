@@ -1,6 +1,6 @@
 <template>
   <div class="card_preview">
-    <el-card style="max-width: 480px" class="card">
+    <el-card class="card">
       <template #header
         ><el-button :icon="Refresh" circle @click="update"
       /></template>
@@ -27,26 +27,26 @@ cardLoading.value = false;
 // cardLoading.value = true;
 
 const api = axios.create({
-  baseURL: "https://api.uomg.com/api",
+  baseURL: "https://api.uomg.com/api/rand.qinghua?format=json",
 });
 
 function update() {
-  api
-    .get("/rand.qinghua?format=json")
-    .then((qinghua) => {
-      contentText.value = qinghua.data.content;
+  axios
+    .get("https://api.kuleu.com/api/yiyan")
+    .then((yiyan) => {
+      contentText.value = yiyan.data;
     })
     .catch((err) => {
-      console.log("qinghua()");
+      console.log("yiyan()");
     });
 }
 update();
 </script>
 
 <style scoped>
-.card {
+.card_preview .card {
   border-radius: 10px;
-  width: 15pc;
+  width: 18pc;
 }
 
 @media screen and (max-width: 600px) {

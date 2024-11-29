@@ -3,7 +3,6 @@
     <el-card class="card" v-if="is_closeCard">
       <template #header>{{ cardHeard }}</template>
       <el-skeleton
-        style="width: 15pc"
         el-skeleton
         :rows="5"
         animated
@@ -71,7 +70,6 @@ function MP4_xiaojiejie() {
         video_url.value = MP4_xiaojiejie.data.mp4_video;
         is_show.value = true;
         cardHeard.value = "高质量小姐姐";
-        console.log("MP4_xiaojiejie");
       }
     })
     .catch((error) => {
@@ -178,8 +176,9 @@ const SwitchVideo = () => {
 </script>
 
 <style scoped>
-.card {
+.card_preview .card {
   border-radius: 10px;
+  width: 18pc;
 }
 
 .video {

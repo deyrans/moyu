@@ -102,7 +102,6 @@ axios
       srcList.value.push(neihanduanzi.data.data);
       srcList.value.push(weiyujianbao.data.data);
       srcList.value.push(xingzuoyunshi.data.data);
-      console.log("get_j4u666:" + img_url.value);
     })
   );
 
