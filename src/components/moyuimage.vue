@@ -53,6 +53,10 @@ function get_j4u() {
   return axios.get("https://api.j4u.ink/v1/store/other/proxy/remote/moyu.json");
 }
 
+function get_vvhan() {
+  return axios.get("https://api.vvhan.com/api/moyu?type=json");
+}
+
 function get_moyuribao() {
   return api.get("/moyuribao/apis.php?type=json");
 }
@@ -81,6 +85,7 @@ srcList.value = [];
 
 axios
   .all([
+    get_vvhan(),
     get_j4u(),
     get_moyuribao(),
     get_moyurili(),
@@ -91,6 +96,7 @@ axios
   ])
   .then(
     axios.spread(function (
+      get_vvhan,
       j4u,
       moyuribao,
       moyurili,
@@ -100,30 +106,30 @@ axios
       xingzuoyunshi
     ) {
       loading.value = false;
-      img_url.value = j4u.data.data.img_url;
+      if (get_vvhan.data.success) {
+        img_url.value = get_vvhan.data.url;
+        srcList.value.push(get_vvhan.data.url);
+      } else if (j4u.data.message == "success") {
+        img_url.value = j4u.data.data.img_url;
+        srcList.value.push(j4u.data.data.img_url);
+      } else if (moyuribao.data.msg == "success") {
+        img_url.value = moyuribao.data.data;
+      } else {
+        loading.value = true;
+      }
 
-      srcList.value.push(j4u.data.data.img_url);
-      srcList.value.push(moyuribao.data.data);
-      srcList.value.push(moyurili.data.data);
-      srcList.value.push(mingxingbagua.data.data);
-      srcList.value.push(neihanduanzi.data.data);
-      srcList.value.push(weiyujianbao.data.data);
-      srcList.value.push(xingzuoyunshi.data.data);
+      if (moyuribao.data.msg == "success") {
+        srcList.value.push(moyuribao.data.data);
+        srcList.value.push(moyurili.data.data);
+        srcList.value.push(mingxingbagua.data.data);
+        srcList.value.push(neihanduanzi.data.data);
+        srcList.value.push(weiyujianbao.data.data);
+        srcList.value.push(xingzuoyunshi.data.data);
+      } else {
+        loading.value = true;
+      }
     })
   );
-
-axios
-  .get("https://api.vvhan.com/api/moyu?type=json")
-  .then((vvhan) => {
-    if (img_url.value.toString() == "") {
-      loading.value = false;
-      srcList.value.push(vvhan.data.url);
-      img_url.value = vvhan.data.url;
-    } else srcList.value.push(vvhan.data.url);
-  })
-  .catch((err) => {
-    console.log("get_vvhan()");
-  });
 </script>
 
 
