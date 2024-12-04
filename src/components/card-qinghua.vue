@@ -27,17 +27,26 @@ cardLoading.value = false;
 // cardLoading.value = true;
 
 const api = axios.create({
-  baseURL: "https://api.uomg.com/api/rand.qinghua?format=json",
+  baseURL: "https://api.vvhan.com/api",
 });
 
 function update() {
-  axios
-    .get("https://api.kuleu.com/api/yiyan")
-    .then((yiyan) => {
-      contentText.value = yiyan.data;
+  // axios
+  //   .get("https://api.uomg.com/api/rand.qinghua")
+  //   .then((qinghua) => {
+  //     contentText.value = qinghua.data.content;
+  //     console.log(qinghua.data);
+  //   })
+  //   .catch((err) => {
+  //     console.log("qinghua()");
+  //   });
+  api
+    .get("/text/love?type=json")
+    .then((love) => {
+      contentText.value = love.data.data.content;
     })
     .catch((err) => {
-      console.log("yiyan()");
+      console.log("love()");
     });
 }
 update();

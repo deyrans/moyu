@@ -7,7 +7,7 @@
         <el-skeleton-item animated style="width: 100%" />
         <el-skeleton-item animated style="width: 30%" />
       </template>
-      <template>
+      <template #default>
         <el-image
           :src="img_url"
           :zoom-rate="1.2"
@@ -16,7 +16,13 @@
           :preview-src-list="srcList"
           :initial-index="0"
           fit="cover"
-        />
+        >
+          <template #error>
+            <el-card class="card">
+              <el-icon><Picture /></el-icon>
+            </el-card>
+          </template>
+        </el-image>
       </template>
     </el-skeleton>
   </div>
@@ -25,6 +31,7 @@
 <script lang="ts" setup>
 import axios from "axios";
 import { ref, watch } from "vue";
+import { Picture } from "@element-plus/icons-vue";
 
 // https://api.j4u.ink/v1/store/other/proxy/remote/moyu.json
 // https://api.vvhan.com/api/moyu?type=json
@@ -121,8 +128,10 @@ axios
 
 
 <style scoped>
-.el-image {
+.el-image,
+.card {
   border-radius: 5px;
+  width: 15pc;
 }
 
 @media screen and (min-width: 1100px) {
